@@ -8,7 +8,13 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data, include = FALSE}
+# Daten importieren mit 'read.csv' - schauen Sie hierzu bitte in die Hilfe (RStudio > Reiter "Help" > "R Help")
+ueq <- read.csv("UEQ_Two-Products.csv", sep = ";")
 ```
 
 
@@ -33,11 +39,34 @@ Hier wird beschrieben wie die Daten erhoben wurden.
 
 ## Daten
 
-Hier befindet sich die Beschreibung der Daten (deskriptive Statistik).
+Hier befindet sich die Beschreibung der Daten (deskriptive Statistik). Beispiele (vielleicht nicht immer sinvoll) werden im Anschluss gezeigt.
 
-```{r}
-ueq <- read.csv("UEQ_Two-Products.csv", sep = ";")
-summary(ueq)
+```{r inspizieren, echo = FALSE}
+# Geben Sie aus der Spalte "wertvoll_minderwertig" die ersten vier Datenpunkte aus.
+wm_top4 <- ueq$wertvoll_minderwertig[1:4]
+# Subset für Produkt 1
+ueq_1 <- subset(ueq, Produkt == 1)
+# Subset für Produkt 2
+ueq_2 <- subset(ueq, Produkt == 2)
+```
+Die ersten vier Datenpunkte der Spalte "wertvoll_minderwertig" lauten: `r wm_top4`. Desweiteren wurde, auf einer Skala von gut (`r min(ueq$gut_schlecht)`) bis schlecht (`r max(ueq$gut_schlecht)`), Produkt 1 im Schnitt mit `r round(mean(ueq_1$gut_schlecht), 3)` bewertet. Produkt 2 hingegen wurde im Schnitt mit `r round(mean(ueq_2$gut_schlecht), 3)` leicht besser bewertet. Ob diese Differenz signifikant ist, muss allerdings noch ein weiterer Test bestätigen.
+
+```{r verändern, echo = FALSE}
+# Benennen Sie die Spalte “sicher_unsicher” in “safe_unsafe” um. Suchen Sie hierzu nach dem passenden Befehl in der Suchmaschine Ihrer Wahl.
+names(ueq)[names(ueq)=="sicher_unsicher"] <- "safe_unsafe"
+
+# Fügen Sie die Spalte “Geschlecht” hinzu.
+geschlecht <- factor(sample(c(rep("männlich", 75), rep("weiblich", 82), rep("divers", 9), rep("keine Angabe", 31))))
+ueq$geschlecht <- geschlecht
+```
+
+Eine Übersicht der Geschlechter der Probanden befindet sich in Tabelle 1.
+```{r geschlecht, echo = FALSE}
+kable(
+  summary(ueq$geschlecht), 
+  col.names = c("Anzahl"), 
+  align = "r", 
+  caption = "Tabelle 1: Übersicht der Geschlechter.")
 ```
 
 
