@@ -35,7 +35,9 @@ Hier wird beschrieben wie die Daten erhoben wurden.
 
 Hier befindet sich die Beschreibung der Daten (deskriptive Statistik).
 
-```{r cars}
+```{r}
+ueq <- read.csv("UEQ_Two-Products.csv", sep = ";")
+
 summary(cars)
 ```
 
