@@ -8,7 +8,13 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r data, include = FALSE}
+# Daten importieren mit 'read.csv' - schauen Sie hierzu bitte in die Hilfe (RStudio > Reiter "Help" > "R Help")
+
 ```
 
 
@@ -33,10 +39,28 @@ Hier wird beschrieben wie die Daten erhoben wurden.
 
 ## Daten
 
-Hier befindet sich die Beschreibung der Daten (deskriptive Statistik).
+Hier befindet sich die Beschreibung der Daten (deskriptive Statistik). Beispiele (vielleicht nicht immer sinvoll) werden im Anschluss gezeigt.
 
-```{r}
-# Daten importieren
+```{r inspizieren, echo = FALSE}
+# Geben Sie aus der Spalte "wertvoll_minderwertig" die ersten vier Datenpunkte aus.
+
+# Subset für Produkt 1
+
+# Subset für Produkt 2
+
+```
+Die ersten vier Datenpunkte der Spalte "wertvoll_minderwertig" lauten: `r paste("So kann R-Inline-Code ausgeführt werden, also auch Berechnungen wie 1 + 4 =", 1+4)`. Desweiteren wurde, auf einer Skala von gut (?) bis schlecht (?), Produkt 1 im Schnitt mit ? bewertet. Produkt 2 hingegen wurde im Schnitt mit ? leicht besser/schlechter bewertet. Ob diese Differenz signifikant ist, muss allerdings noch ein weiterer Test bestätigen.
+
+```{r verändern, echo = FALSE}
+# Benennen Sie die Spalte “sicher_unsicher” in “safe_unsafe” um. Suchen Sie hierzu nach dem passenden Befehl in der Suchmaschine Ihrer Wahl.
+
+# Fügen Sie die Spalte “Geschlecht” hinzu.
+
+```
+
+Eine Übersicht der Geschlechter der Probanden befindet sich in Tabelle 1.
+```{r geschlecht, echo = FALSE}
+
 ```
 
 
