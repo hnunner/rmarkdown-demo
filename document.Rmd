@@ -35,13 +35,10 @@ Hier wird beschrieben wie die Daten erhoben wurden.
 
 Hier befindet sich die Beschreibung der Daten (deskriptive Statistik).
 
-```{r cars}
-summary(cars)
+```{r}
+# Daten importieren
 ```
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
 # Literaturverzeichnis
 
