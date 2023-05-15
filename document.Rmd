@@ -37,13 +37,9 @@ Hier befindet sich die Beschreibung der Daten (deskriptive Statistik).
 
 ```{r}
 ueq <- read.csv("UEQ_Two-Products.csv", sep = ";")
-
-summary(cars)
+summary(ueq)
 ```
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
 # Literaturverzeichnis
 
