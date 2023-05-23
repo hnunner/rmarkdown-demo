@@ -8,6 +8,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(dplyr)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -56,7 +57,10 @@ Die ersten vier Datenpunkte der Spalte "wertvoll_minderwertig" lauten: `r wm_top
 names(ueq)[names(ueq)=="sicher_unsicher"] <- "safe_unsafe"
 
 # Fügen Sie die Spalte “Geschlecht” hinzu.
-geschlecht <- factor(sample(c(rep("männlich", 75), rep("weiblich", 82), rep("divers", 9), rep("keine Angabe", 31))))
+geschlecht <- factor(sample(c(rep("männlich", 75), 
+                              rep("weiblich", 82), 
+                              rep("divers", 9), 
+                              rep("keine Angabe", 31))))
 ueq$geschlecht <- geschlecht
 ```
 
@@ -68,6 +72,56 @@ kable(
   align = "r", 
   caption = "Tabelle 1: Übersicht der Geschlechter.")
 ```
+
+Ab hier befinden sich die neuen Übungen, basierend auf den DataCamp-Tidyverse-Übungen aus Übungswoche 4.
+```{r wrangling-and-summarizing, echo = FALSE}
+# Erzeugen Sie ein neues Dataframe mit Hilfe der Tidyverse Funktionen "filter()" und "arrange()". Das neue Dataframe sollte nur Produkte des Typs 1 und Bewertungen für "unerfreulich_erfreulich" größer als 3 enthalten. Desweiteren sollen die Daten sortiert werden, so dass die erfreulichsten Bewertungen zuerst genannt werden.
+
+
+# Fügen Sie eine neue Spalte mithilfe von "mutate()" hinzu. Diese soll angeben ob sich eine Versuchsperson als "weiblich" gekennzeichnet hat. Wenn ja, soll in der neuer Spalte "weiblich" stehen, wenn nicht, dann "nicht weiblich". Tipp: Schauen Sie sich hierzu den R-Befehl "ifelse()" an.
+
+# min, mean, median, max für Variable "unerfreulich_erfreulich" mit summarize() ausschließlich für produkt 2 (filter())
+
+# min, mean, median, max für Variable "unerfreulich_erfreulich" mit summarize() für beide Produkte in einer Ausgabe (group_by())
+
+options(dplyr.summarise.inform = FALSE)
+
+freu_verst <- ueq %>% 
+  filter(!is.na(unerfreulich_erfreulich), !is.na(unverständlich_verständlich)) %>%
+  select(unerfreulich_erfreulich, unverständlich_verständlich, Produkt) %>% 
+  mutate(wie_erfreulich = ifelse(unerfreulich_erfreulich < 3, 
+                                "(eher) unerfreulich", 
+                                ifelse(unerfreulich_erfreulich == 3,
+                                       "neutral",
+                                       "(eher) erfreulich")),
+         wie_erfreulich = factor(wie_erfreulich, levels = c("(eher) unerfreulich", "neutral", "(eher) erfreulich"))) %>% 
+  group_by(Produkt, wie_erfreulich) %>% 
+  summarize(verständlich_mean = mean(unverständlich_verständlich),
+            verständlich_median = median(unverständlich_verständlich),
+            verständlich_min = min(unverständlich_verständlich),
+            verständlich_max = max(unverständlich_verständlich))
+
+```
+
+In Tabelle 2 wird der Zusammenhang zwischen Erfreulichkeit und Verständlichkeit dargestellt:
+```{r tab-erfreulich-verständlich, echo = FALSE}
+kable(
+  freu_verst, 
+  col.names = c("Produkt", "Erfreulichkeit", "Verständlichkeit (mean)", "Verständlichkeit (median)", "Verständlichkeit (min)", "Verständlichkeit (max)"), 
+  align = "llcccc", 
+  caption = "Tabelle 2: Zusammenhang zwischen der Erfreulichkeit und Verständlichkeit von Produkt X.")
+```
+
+In Abbildung 1 wird der Zusammenhang zwischen Erfreulichkeit und Verständlichkeit dargestellt:
+```{r abb-erfreulich-verständlich, echo = FALSE}
+library(ggplot2)
+ggplot(ueq %>% 
+         filter(!is.na(unerfreulich_erfreulich), !is.na(unverständlich_verständlich)), 
+       aes(x = unerfreulich_erfreulich, 
+           y = unverständlich_verständlich)) + 
+  geom_point(position = "jitter")
+```
+
 
 
 # Literaturverzeichnis
