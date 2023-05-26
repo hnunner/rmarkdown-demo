@@ -1,6 +1,6 @@
 ---
-title: "R Markdown Demo"
-author: "Hendrik Nunner"
+title: "{Studientitel – gibt eure Arbeit eine knappe Überschrift, die die zentralen Punkte eure Arbeit zusammenfasst. Vgl. mit anderem Paper}"
+author: "{Alle Gruppenmitglieder}"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 csl: apa7.csl
@@ -8,123 +8,142 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-library(dplyr)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r data, include = FALSE}
 # Daten importieren mit 'read.csv' - schauen Sie hierzu bitte in die Hilfe (RStudio > Reiter "Help" > "R Help")
-ueq <- read.csv("UEQ_Two-Products.csv", sep = ";")
+
 ```
+
+<!-- ###################### PREAMBLE ###################### -->
+
+### Beitragserklärung / Contribution Statement
+
+{Diese Beitragserklärung wirkt sich nicht auf die Benotung aus, ist aber eine Best Practice in Teamarbeit und empfehlenswert. Sie macht jeweilige Beiträge transparent und regt zur Selbst-Reflexion als Teammitglied an. 
+
+Es gibt keine feste Vorgabe, wie sie auszusehen hat, aber ein Statement könnte wie folgt aussehen: „A.B. und B.C. haben die ursprüngliche Literaturrecherche betrieben. B.C. erstellte die LimeSurvey Umfrage.  A.B. schrieb den R-Skript nach Beratung von B.C., C.D., und D.E. Alle Autor:innen diskutierten die Ergebnisse und trugen zum endgültigen Manuskript bei." [Hier](https://www.epj.org/images/stories/faq/examples-of-author-contributions.pdf) sind weitere Beispiele zur Inspiration.}
 
 
 <!-- ###################### EINLEITUNG ###################### -->
-# Einleitung
+## Einleitung
 
-Im ersten Absatz wird der Kontext erläutert. Dieser bezieht sich beispielsweise auf die gesellschaftlichen Rahmenbedingungen.
+{Aufgabe 2 hinzufügen}
 
-Im zweiten Absatz wird dann erläutert welche für den Kontext relevante Forschung bisher getätigt wurde. Hier könnten auch ein paar Referenzen stehen [@layte_why_2017; @lunn_case_2018]. @liu_markov-based_2020 hat sicherlich auch tolle Forschung betrieben.
+### Forschungsfragen
 
-Im dritten Absatz steht dann die konkrete Forschungsfrage und wie diese erforscht wird.
+{Aufgabe 1 hinzufügen}
 
 
-<!-- ###################### RESULTATE ###################### -->
-# Resultate
-
-Hier stehen die Ergebnisse der Datenerhebung und der statistischen Auswertung.
+<!-- ###################### METHODEN ###################### -->
 
 ## Methode
 
-Hier wird beschrieben wie die Daten erhoben wurden.
+### Stichprobe
 
-## Daten
+{Teile von Aufgabe 5 hinzufügen}
 
-Hier befindet sich die Beschreibung der Daten (deskriptive Statistik). Beispiele (vielleicht nicht immer sinvoll) werden im Anschluss gezeigt.
+{Hier eine Zusammenfassung, wer an eure Studie tatsächlich teilgenommen hat. Es ist wichtig, dass eure Lesende ein gutes Gefühl für die Stichprobe bekommen - schreibt also ruhig alle Daten rein, die eine längerfristige Eigenschaften beschreibt. Falls ihr Teilnehmende ausgeschlossen habt, hier bitte erwähnen, damit ihr transparent bleibt und eure Sorgfalt aufweist. WICHTIG: Achtet auf die Formatierung: Statistiken und Gleichheitszeichen werden kursiv geschrieben! 
 
-```{r inspizieren, echo = FALSE}
-# Geben Sie aus der Spalte "wertvoll_minderwertig" die ersten vier Datenpunkte aus.
-wm_top4 <- ueq$wertvoll_minderwertig[1:4]
-# Subset für Produkt 1
-ueq_1 <- subset(ueq, Produkt == 1)
-# Subset für Produkt 2
-ueq_2 <- subset(ueq, Produkt == 2)
-```
-Die ersten vier Datenpunkte der Spalte "wertvoll_minderwertig" lauten: `r wm_top4`. Desweiteren wurde, auf einer Skala von gut (`r min(ueq$gut_schlecht)`) bis schlecht (`r max(ueq$gut_schlecht)`), Produkt 1 im Schnitt mit `r round(mean(ueq_1$gut_schlecht), 3)` bewertet. Produkt 2 hingegen wurde im Schnitt mit `r round(mean(ueq_2$gut_schlecht), 3)` leicht besser bewertet. Ob diese Differenz signifikant ist, muss allerdings noch ein weiterer Test bestätigen.
+“Unsere Stichprobe (*N =* 40) hatte ein Alters- (*M =* 24.4, *Mdn =* 23, *SD =* 4.5) und Geschlechtsverteilung (21 weiblich, 16 männlich, 1 divers, 2 ohne Angabe) typische für Studierende. Teilnehmende hatten einen überdurchschnittlichen ATI-Wert (*M =* 5.2, *Mdn =* 5,1, *SD =* 1.2). Im Durchschnitt führen Teilnehmende an drei Tage die Woche Auto (*M =* 3.2, *Mdn =* 3, *SD =* 3.1) mit ca. 20 km pro Tag (*M =* 21.2, *Mdn =* 20.3, *SD =* 15.1). Die kleinste gefahrene Tagesstrecke war 2 km, die längste 40 km. Obwohl ursprünglich insgesamt 42 Personen an unserer Studie teilnahmen, wurden zwei Teilnehmende ohne wöchentliche Fahrten von der Studie ausgeschlossen.”}
 
-```{r verändern, echo = FALSE}
-# Benennen Sie die Spalte “sicher_unsicher” in “safe_unsafe” um. Suchen Sie hierzu nach dem passenden Befehl in der Suchmaschine Ihrer Wahl.
-names(ueq)[names(ueq)=="sicher_unsicher"] <- "safe_unsafe"
+### Prozedere
 
-# Fügen Sie die Spalte “Geschlecht” hinzu.
-geschlecht <- factor(sample(c(rep("männlich", 75), 
-                              rep("weiblich", 82), 
-                              rep("divers", 9), 
-                              rep("keine Angabe", 31))))
-ueq$geschlecht <- geschlecht
-```
+{Aufgabe 4}
 
-Eine Übersicht der Geschlechter der Probanden befindet sich in Tabelle 1.
-```{r geschlecht, echo = FALSE}
-kable(
-  summary(ueq$geschlecht), 
-  col.names = c("Anzahl"), 
-  align = "r", 
-  caption = "Tabelle 1: Übersicht der Geschlechter.")
-```
-
-Ab hier befinden sich die neuen Übungen, basierend auf den DataCamp-Tidyverse-Übungen aus Übungswoche 4.
-```{r wrangling-and-summarizing, echo = FALSE}
-# Erzeugen Sie ein neues Dataframe mit Hilfe der Tidyverse Funktionen "filter()" und "arrange()". Das neue Dataframe sollte nur Produkte des Typs 1 und Bewertungen für "unerfreulich_erfreulich" größer als 3 enthalten. Desweiteren sollen die Daten sortiert werden, so dass die erfreulichsten Bewertungen zuerst genannt werden.
+[Beschreibt möglichst genau, wie eure Studie ablaufen wird. Begründet die Wahl der einzelnen Schritte und zitiert die Quellen eure Fragebögen. Hilfreich kann ein Schaubild zur Visualisierung sein.}
 
 
-# Fügen Sie eine neue Spalte mithilfe von "mutate()" hinzu. Diese soll angeben ob sich eine Versuchsperson als "weiblich" gekennzeichnet hat. Wenn ja, soll in der neuer Spalte "weiblich" stehen, wenn nicht, dann "nicht weiblich". Tipp: Schauen Sie sich hierzu den R-Befehl "ifelse()" an.
+<!-- ###################### Ergebnisse ###################### -->
+## Ergebnisse
 
-# min, mean, median, max für Variable "unerfreulich_erfreulich" mit summarize() ausschließlich für produkt 2 (filter())
+{Aufgabe 5}
 
-# min, mean, median, max für Variable "unerfreulich_erfreulich" mit summarize() für beide Produkte in einer Ausgabe (group_by())
+### {Forschungsfrage 1}
 
-options(dplyr.summarise.inform = FALSE)
+#### Voraussetzungen
 
-freu_verst <- ueq %>% 
-  filter(!is.na(unerfreulich_erfreulich), !is.na(unverständlich_verständlich)) %>%
-  select(unerfreulich_erfreulich, unverständlich_verständlich, Produkt) %>% 
-  mutate(wie_erfreulich = ifelse(unerfreulich_erfreulich < 3, 
-                                "(eher) unerfreulich", 
-                                ifelse(unerfreulich_erfreulich == 3,
-                                       "neutral",
-                                       "(eher) erfreulich")),
-         wie_erfreulich = factor(wie_erfreulich, levels = c("(eher) unerfreulich", "neutral", "(eher) erfreulich"))) %>% 
-  group_by(Produkt, wie_erfreulich) %>% 
-  summarize(verständlich_mean = mean(unverständlich_verständlich),
-            verständlich_median = median(unverständlich_verständlich),
-            verständlich_min = min(unverständlich_verständlich),
-            verständlich_max = max(unverständlich_verständlich))
+{Beschreibt inwiefern die statistische Voraussetzung erfüllt oder nicht erfüllt werden. Falls das eine Folge hat, dies erwähnen. Mindestens sollten hier Normalverteilung und Outlier erwähnt werden - das hängt aber von dem jeweiligen Test ab (z.B. Varianzhomogenität bei Regressionen). 
+
+“Ein Shapiro-Wilk-Test auf Normalverteilung deutet darauf hin, dass ATI annähernd normalverteilt war (*p =* .12), Need for Cognition jedoch nicht (*p =* .03). Folglich wurde hier der non-parametrische Spearman’s Rho berechnet.”
+
+“Aufgrund von extremen Werten (d.h. größer als 1,5-Fache des Interquartilsabstands) wurden vier Teilnehmer von der weiteren Datenauswertung ausgeschlossen.”}
+
+
+```{r assumptions_rq1, echo = FALSE}
+# Hier könnten Sie die jeweilige Berechnungen hinzugen oder as in-line code bearbeiten. 
 
 ```
 
-In Tabelle 2 wird der Zusammenhang zwischen Erfreulichkeit und Verständlichkeit dargestellt:
-```{r tab-erfreulich-verständlich, echo = FALSE}
-kable(
-  freu_verst, 
-  col.names = c("Produkt", "Erfreulichkeit", "Verständlichkeit (mean)", "Verständlichkeit (median)", "Verständlichkeit (min)", "Verständlichkeit (max)"), 
-  align = "llcccc", 
-  caption = "Tabelle 2: Zusammenhang zwischen der Erfreulichkeit und Verständlichkeit von Produkt X.")
+#### Statistischer Test
+
+{Berichtet hier die wichtigsten Kennzahlen des Tests. Mindestens sollte das die Teststatistik (z.B. r, t, W, usw.), ein p-Wert und eine Klartext Beschreibung der Ergebnisse sein. Bestenfalls auch eine Effektstärke berichten und diese interpretieren (schwacher, mittlerer oder starker Effekt nach Cohen, 1988)
+
+“Die Gesamtwerte der ATI- und Need-for-Cognition Skalen korrelierten miteinander (*r =* -.920, *p <* .001). Das bedeutet, dass ein höheren Wert auf einer Skala eher mit einen höheren Wert auf der anderen Skala einhergingen, und umgekehrt. Laut Cohen (1988) ist das ein starker Effekt.” }
+
+
+```{r tests_rq1, echo = FALSE}
+# Hier könnten Sie die jeweilige Berechnungen hinzugen oder as in-line code bearbeiten. 
+
 ```
 
-In Abbildung 1 wird der Zusammenhang zwischen Erfreulichkeit und Verständlichkeit dargestellt:
-```{r abb-erfreulich-verständlich, echo = FALSE}
-library(ggplot2)
-ggplot(ueq %>% 
-         filter(!is.na(unerfreulich_erfreulich), !is.na(unverständlich_verständlich)), 
-       aes(x = unerfreulich_erfreulich, 
-           y = unverständlich_verständlich)) + 
-  geom_point(position = "jitter")
-```
+{Wiederholen Sie diese Schritte für die nächsten Forschungsfragen}
 
+## Diskussion 
+
+{Aufgabe 6}
+
+### Zusammenfassung
+{Hier die Ergebnisse SEHR KNAPP zusammenfassen und in Bezug zu der Forschungsfrage bringen: inwiefern habt ihr eine Antwort auf eure Frage bekommen? 
+
+“In unsere online korrelationsstudie mit Studierende, fanden wir eine signifikante Korrelation zwischen ATI und Need-for-Cognition Werte. Im Bezug zur Forschungsfrage “Inwiefern hängt ATI mit Need-for-Cognition bei Studierende zusammen?” liefert dieses Ergebnis erste Indizien dafür, dass sogar ein starker Zusammenhang bestätigt werden kann.”}
+
+### Limitationen
+{Kurz auf Einschränkungen eure Ergebnisse gehen - was habt ihr falsch gemacht, was hätte besser sein können? Das ist ein guter Zeitpunkt um nochmal über die Vorlesungs-Folien zu gehen. Denkt auch daran die Interpretation zu unterstützen: was bedeutet das für eure Ergebnisse? ACHTUNG: Eure Studie nicht kaputt machen, sondern realistisch reflektieren und einordnen.
+
+“Zu beachten ist dass die aktuelle Studie an einer Universität mit einen technischen-medizinischen Fokus durchgeführt worden ist, und dass die Rekrutierung über einen allgemeinen E-Mail Verteiler durchgeführt worden ist. Insofern ist eine selbst-selektierte Stichprobe, die eine höhere Technikaffinität als die allgemeine Studierende Population in Deutschland oder weltweit aufweist, möglich. Insofern könnten unsere Ergebnisse ggf. den Zusammenhang bei geringeren Skalenwerten nicht ausreichend untersucht haben.}
+
+### Implikationen
+{Ein letztes “Why should I care?” - hier deutlich machen, warum eure Forschung nicht nur zum Selbstzweck war, und welche Rolle eure Ergebnisse in weitere Forschung oder in Anwendungen haben kann. Ganz wichtig hierbei ist das Forschung nicht in einen Vakuum passiert - bezieht euch deshalb auf andere Paper. Stehen eure Ergebnisse in Widerspruch oder Einklang mit anderen Arbeiten? Können andere Studie die Effekte die ihr gefunden habt gut erklären?
+
+“Die Ergebnisse stimmen mit vorherigen Untersuchungen zur ATI-Skala überein (z.B. Attig et al., 2017; Franke et al., 2019). Obendrauf liefern die Daten hier neue Erkenntnisse zur spezifischen Stichprobe, und deutet darauf hin, dass diese Gruppe besonders hohe Werte auf ATI- und Need-for-Cognition Werte aufweisen. Zukünftige Studien sollten diese Stichprobe mit anderen kontrastieren und auch an Universitäten mit heterogene Studiengänge wiederholt werden.”} 
+
+## Fazit 
+{Hier kann z.B. nochmal eine Take-Home Message eingefügt werden, oder ein Punkt aus der Einleitung nochmal aufgegriffen werden} 
 
 
 # Literaturverzeichnis
 
 <div id="refs"></div>
 
+***
+
+# Anhang 1- Rekrutierungstext 
+{Aufgabe 3}
+
+{Fügt hier 1-zu-1 den Rekrutierungstext, den ihr benutzen wollt ein.
+Denkt daran auch den Link zur Befragung einzufügen und eine Motivation formulieren, aus der deutlich wird, warum es für den Teilnehmenden sinnvoll ist, an dieser Befragung teilzunehmen. 
+
+Beispiel: Im ersten Satz sollten keine Floskeln stehen (z.B. “Im Rahmen meiner Bachelorarbeit”). Besser ist sowas wie “Wie beeinflusst Musik deine Energie beim Lernen?” → Leser:in weiß direkt, worum es geht und durch die Fragestellung Interesse die Antwort zu erfahren. 
+
+Weitere Fragen, die unterstützen können:
+
+1. Warum sollte man teilnehmen? (“Bitte, bitte, bitte” funktioniert nicht immer - könnt ihr was mit eure Studie anbieten? z.B. “Lernt neue coole Tools kennen!”)
+
+2. Wer darf teilnehmen? (Achtung: Alle werden teilnehmen dürfen, aber für eine nicht-SMNF-Studie sollte das berücksichtigt werden) 
+
+3. Wie lange dauert die Teilnahme? (Wer hier zu wenig einschätzt, geht die Gefahr zornige Proband:innen ein, was eure Ergebnisse beeinflussen könnte) 
+
+4. Was bekomme ich für meine Teilnahme? (i.d.R. 0,5 VP-Stunden für MDI-Studierende)
+
+5. Wer seid ihr? (z.B. “MfG, Gruppe 9 des SMNF-Kurses”) 
+
+Achtet darauf, nicht zu viel von eurer Fragestellung in der Einladungsmail zu packen. Proband:innen werden dann unbewusst versuchen eure Erwartungen zu erfüllen, was eure Ergebnisse verzerren kann (auch „Demand Charactersitics“ genannt).}
+
+***
+# Anhang 2 - Fragebögen
+
+{Aufgabe 4}
+
+{Fügt hier 1-zu-1 die Methoden ein, die ihr benutzen wollt, z.B. als PDF-Export der LimeSurvey Befragung.}
